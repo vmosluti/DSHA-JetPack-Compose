@@ -1,5 +1,10 @@
 # DSHA
 
+
+
+
+> **鸣谢XQC0216完成首次上传**：
+> 
 <p align="center">
   <b>DeepSeek Harness 安卓启动器</b><br>
   在手机上跑完整的 <a href="https://github.com/deepseek-ai/deepseek-harness">deepseek-harness</a> —— 免 ROOT，免 Termux，装完即用
@@ -24,8 +29,6 @@
 ## 这是什么
 
 DeepSeek Harness（`@deepseek-ai/dsh`）是 DeepSeek 官方的 agent harness，类 Claude Code。
-它是为 glibc Linux 写的，直接在安卓上跑会撞上一堆事：原生模块编译不过、`link(2)` 被
-SELinux 挡住、沙箱起不来、前端按桌面布局排版。
 
 **DSHA 把这些全部封在一个 APK 里。** 装 APK、填 API key（或跳过）、点启动 —— 不需要 Termux、
 不需要 ROOT、不需要敲一行命令。里面是一个完整的 Ubuntu 环境：`apt` 能用、
@@ -70,22 +73,15 @@ SELinux 挡住、沙箱起不来、前端按桌面布局排版。
 
 ## 下载
 
-**安装包下载请看 [Releases](https://github.com/DSH-APP/DSHA/releases/latest)。**
+**安装包下载请看 [Releases](https://github.com/vmosluti/DSHA-JetPack-Compose/releases/latest)。**
 
-两个版本共享 `com.dsh.client` 包名与数据，**不能并排安装**：
+两个版本包名不同，**能并排安装**：
 
-| 版本 | 适用设备 | 内核 | 大小 |
-|---|---|---|---:|
-| **Standard 标准版** | Android 11+ / arm64 | 系统 WebView；支持实验性虚拟屏 | 261 MiB |
-| **Low 兼容版** | Android 6+ / arm64 | 内置 GeckoView 143；暂不支持虚拟屏 | 334 MiB |
-
-- **升级**：用同签名 APK 覆盖安装即可（证书指纹 `e7e3a3…a53f5`）。
-- **应用内更新**：「设置 → 检查更新」从官网 [`dsha.cc`](https://dsha.cc) 拉取发布清单。
-- **历史版本**：[Releases](https://github.com/DSH-APP/DSHA/releases)。
+- **应用内更新**：目前接的是原版DSHA的。
 
 ### 30 秒上手
 
-1. 装 APK（仅 arm64；Android 11+ 选 Standard，更老的系统选 Low）
+1. 装 APK（仅 arm64）
 2. 首次启动解压内置环境（几分钟，只有一次）
 3. 「配置」页填 DeepSeek API key →「启动」页点启动 → 自动打开 Web UI
 
@@ -178,7 +174,6 @@ agent 通过本机 `127.0.0.1:3090` 桥调用以下能力（token 门控）：
 
 | 能力 | 说明 |
 |---|---|
-| 双内核 | Standard 用系统 WebView；Low 内置 GeckoView 143 |
 | 移动端适配 | 内置 dsh-web-mobile（MIT）：窄屏单栏 + 目录抽屉、底部 sheet、安全区适配 |
 | 画中画 | 对话窗口支持 PiP 小窗悬浮 |
 | 高刷与省电 | 按用户刷新率上限请求高刷；空闲自动交还系统省电 |
@@ -295,14 +290,9 @@ python tools/verify-stability.py             # 稳定性验收门禁
 
 ---
 
-交流
+# 交流渠道（原版）
 
 QQ 群 975836806 —— 测试版、问题反馈、插件交流。
-
-事宜 联系
-项目主创（合作/授权/入伙） QQ 2921185884
-现维护者（项目提议/反馈，或直接提 issue） QQ 1876843459
-Email 1437ht@gmail.com
 
 ---
 
