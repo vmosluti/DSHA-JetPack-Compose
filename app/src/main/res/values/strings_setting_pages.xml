@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <!-- Settings sub pages: titles -->
+    <string name="setting_page_install" translatable="false">安装</string>
+    <string name="setting_page_config" translatable="false">配置</string>
+    <string name="setting_page_data_backup" translatable="false">数据与备份</string>
+    <string name="setting_page_device_auth" translatable="false">设备能力授权</string>
+    <string name="setting_page_language" translatable="false">语言</string>
+
+    <!-- Settings sub page: install -->
+    <string name="setting_page_install_repair" translatable="false">安装修复</string>
+    <string name="setting_page_install_repair_summary" translatable="false">重装或修复已损坏的运行组件</string>
+    <string name="setting_page_install_runtime" translatable="false">运行环境</string>
+    <string name="setting_page_install_runtime_summary" translatable="false">检查并补齐运行所需的环境依赖</string>
+
+    <!-- Settings sub page: config -->
+    <string name="setting_page_config_interface" translatable="false">接口</string>
+    <string name="setting_page_config_interface_summary" translatable="false">服务地址、密钥与超时等接口参数</string>
+    <string name="setting_page_config_display" translatable="false">显示</string>
+    <string name="setting_page_config_display_summary" translatable="false">界面密度、字号与主题相关显示项</string>
+    <string name="setting_page_config_runtime" translatable="false">运行</string>
+    <string name="setting_page_config_runtime_summary" translatable="false">并发、超时与后台运行策略</string>
+
+    <!-- Settings sub page: data and backup -->
+    <string name="setting_page_backup_restore" translatable="false">备份与恢复</string>
+    <string name="setting_page_backup_restore_summary" translatable="false">导出或导入应用数据</string>
+    <string name="setting_page_file_share" translatable="false">文件共享</string>
+    <string name="setting_page_file_share_summary" translatable="false">通过共享目录与其他应用交换文件</string>
+
+    <!-- Settings sub page: device capability authorization -->
+    <string name="setting_page_root" translatable="false">Root</string>
+    <string name="setting_page_root_summary" translatable="false">请求并检测 Root 权限</string>
+    <string name="setting_page_shizuku" translatable="false">Shizuku</string>
+    <string name="setting_page_shizuku_summary" translatable="false">通过 Shizuku 获得高权限能力</string>
+    <string name="setting_page_adb" translatable="false">ADB</string>
+    <string name="setting_page_adb_summary" translatable="false">无线调试与 ADB 授权状态</string>
+    <string name="setting_page_permission" translatable="false">权限</string>
+    <string name="setting_page_permission_summary" translatable="false">应用运行时权限清单</string>
+
+    <!-- Settings sub page: language -->
+    <string name="setting_page_language_simplified_chinese" translatable="false">简体中文</string>
+    <string name="setting_page_language_simplified_chinese_summary" translatable="false">当前语言</string>
+</resources>

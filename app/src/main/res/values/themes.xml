@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 主界面与所有 DSHA 子活动共用同一套 M3 主题（窗口底色 / 弹窗 / 系统栏一致），
+         夜间配色由 Theme.DeepseekHarness 自己的 values-night 解析。 -->
+    <style name="Theme.KernelSUStyleUIKit" parent="Theme.DeepseekHarness">
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+
+</resources>

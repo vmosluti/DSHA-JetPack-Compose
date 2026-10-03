@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  合并清单：Compose 外壳（com.luti.dshlauncher）+ DSHA 引擎（com.deepseekharness.app）。
+  - 唯一 LAUNCHER 是 Compose 的 .ui.MainActivity。
+  - DSHA 的 ui.MainActivity 只做启动门禁跳板，不再是入口。
+  - 应用主题用 DSHA 的 AppCompat 主题（DSHA 的 Activity 依赖它），Compose 入口单独指定自己的主题。
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:targetApi="30" />
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+
+    <uses-sdk tools:overrideLibrary="top.yukonga.miuix.kmp.blur" />
+
+    <queries>
+        <package android:name="moe.shizuku.privileged.api" />
+        <intent><action android:name="rikka.shizuku.intent.action.REQUEST_BINDER" /></intent>
+        <intent><action android:name="android.intent.action.OPEN_DOCUMENT" /><data android:mimeType="*/*" /></intent>
+        <intent><action android:name="android.intent.action.GET_CONTENT" /><data android:mimeType="*/*" /></intent>
+    </queries>
+
+    <!--
+      不再 directBootAware：DSHA 运行时（rootfs、配置、凭据护栏）全部在凭据加密存储里，
+      锁屏未解锁时初始化会读写失败。
+      不再挂 network_security_config：它会覆盖 usesCleartextTraffic，
+      而 DSHA 的局域网模式需要明文访问非 localhost 地址。
+    -->
+    <application
+        android:name=".TemplateApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hasFragileUserData="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.DeepseekHarness">
+
+        <!-- ===== Compose 外壳（唯一入口） ===== -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KernelSUStyleUIKit"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <!-- ===== DSHA 引擎页面 ===== -->
+        <!-- 启动门禁跳板：引擎层通知 / 服务以它为「回到主界面」的目标 -->
+        <activity
+            android:name="com.deepseekharness.app.ui.MainActivity"
+            android:exported="false"
+            android:noHistory="true" />
+        <!-- Compose 外壳打开 DSHA 原生功能页的宿主 -->
+        <activity
+            android:name="com.deepseekharness.app.ui.DshaPageActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name="com.deepseekharness.app.ui.ModelSetupActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.CommunityActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.OnboardingPrepareActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.OnboardingReadyActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.AccessibilitySetupActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.UpdateActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.DiagnosticActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.StartupRecoveryActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.RecoveryActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.RecoveryWebActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.BackgroundTasksActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.NativeDataActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.RetainedDataActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.AutomaticBackupActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.ui.StorageActivity" android:exported="false" />
+        <activity android:name="com.deepseekharness.app.vscreen.VirtualScreenActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.WelcomeActivity" android:exported="false" />
+        <activity
+            android:name="com.deepseekharness.app.ui.WebPreviewActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name="com.deepseekharness.app.ui.ExtractActivity" android:exported="false" />
+        <activity
+            android:name="com.deepseekharness.app.ui.AdbPairActivity"
+            android:exported="false"
+            android:label="ADB 无线配对" />
+        <activity android:name="com.deepseekharness.app.ui.PluginInstallActivity" android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="dsha.cc" android:pathPrefix="/install" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="dsha" android:host="install" />
+            </intent-filter>
+        </activity>
+
+        <!-- ===== DSHA 服务 ===== -->
+        <service android:name="com.deepseekharness.app.recovery.RecoveryService" android:exported="false" android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-started emergency AI recovery workspace with an isolated runtime, foreground progress, and explicit stop action." />
+        </service>
+        <service android:name="com.deepseekharness.app.backup.PostUpgradeCleanupService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <service android:name="com.deepseekharness.app.backup.AutomaticBackupService" android:permission="android.permission.BIND_JOB_SERVICE" android:exported="false" />
+        <service android:name="com.deepseekharness.app.backup.DataProtectionService" android:exported="false" android:foregroundServiceType="dataSync" />
+        <service
+            android:name="com.deepseekharness.app.DeviceBridgeService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+        <service android:name="com.deepseekharness.app.UpdateDownloadService" android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name="com.deepseekharness.app.HarnessService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse|connectedDevice">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-started local AI development server and terminal runtime with an ongoing notification and explicit stop action." />
+        </service>
+        <service
+            android:name="com.deepseekharness.app.ShellService"
+            android:exported="false"
+            android:process=":shizuku"
+            android:permission="moe.shizuku.manager.permission.API_V23"
+            tools:ignore="Instantiatable" />
+        <service
+            android:name="com.deepseekharness.app.DshaAccessibilityService"
+            android:exported="false"
+            android:label="DSHA 配对助手"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- ===== DSHA Provider ===== -->
+        <!-- 与 Compose 的 .fileprovider 同为 FileProvider，需独立子类避免清单重复注册 -->
+        <provider android:name="com.deepseekharness.app.UpdatesFileProvider" android:authorities="${applicationId}.updates"
+            android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/update_file_paths" />
+        </provider>
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+        <provider
+            android:name="com.deepseekharness.app.DshaDocumentsProvider"
+            android:authorities="${applicationId}.documents"
+            android:permission="android.permission.MANAGE_DOCUMENTS"
+            android:exported="true"
+            android:grantUriPermissions="true">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
+
+        <!-- ===== DSHA Receiver ===== -->
+        <receiver android:name="com.deepseekharness.app.AdbKeepAliveReceiver" android:exported="false" />
+        <receiver android:name="com.deepseekharness.app.ConfirmReceiver" android:exported="false" />
+        <receiver
+            android:name="com.deepseekharness.app.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

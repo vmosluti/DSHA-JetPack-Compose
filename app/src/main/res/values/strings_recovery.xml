@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 恢复选项页面；全部为固定中文文案，不参与翻译。 -->
+    <string name="recovery_title" translatable="false">恢复选项</string>
+
+    <!-- Section 1: 启动恢复 -->
+    <string name="recovery_section_boot" translatable="false">启动恢复</string>
+    <string name="recovery_boot_reason" translatable="false">进入原因: 网页已就绪</string>
+    <string name="recovery_boot_desc" translatable="false">此页面不依赖 Web。可查看最近启动记录、恢复配置快照，或卸载出错的插件。</string>
+
+    <!-- Section 2: 恢复与修复 -->
+    <string name="recovery_section_repair" translatable="false">恢复与修复</string>
+    <string name="recovery_repair_summary" translatable="false">通过以下操作尝试解决启动问题</string>
+    <string name="recovery_action_retry_boot" translatable="false">重试启动</string>
+    <string name="recovery_action_safe_boot" translatable="false">安全启动基础界面</string>
+    <string name="recovery_action_new_profile" translatable="false">新建配置文件</string>
+    <string name="recovery_action_restore_interrupted" translatable="false">恢复中断的配置修复</string>
+
+    <!-- Section 3: 其他工具 -->
+    <string name="recovery_section_tools" translatable="false">其他工具</string>
+    <string name="recovery_tools_summary" translatable="false">更多高级选项，帮助排查和解决问题</string>
+    <string name="recovery_action_env_repair" translatable="false">环境安装与修复</string>
+    <string name="recovery_action_view_logs" translatable="false">查看并下载日志</string>
+    <string name="recovery_action_refresh_records" translatable="false">刷新恢复记录</string>
+
+    <!-- Section 4: 最近五次启动 -->
+    <string name="recovery_section_recent_boots" translatable="false">最近五次启动</string>
+    <string name="recovery_recent_boots_empty" translatable="false">还没有启动记录。下一次启动会自动记录。</string>
+
+    <!-- Section 5: 配置快照 -->
+    <string name="recovery_section_snapshots" translatable="false">配置快照</string>
+    <string name="recovery_snapshots_summary" translatable="false">保留三次健康启动与三次修复前快照；仅保存配置，不复制会话、工作区或依赖目录。</string>
+</resources>

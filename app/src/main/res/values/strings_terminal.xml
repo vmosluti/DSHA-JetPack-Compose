@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 终端面板（模拟终端）新增文案；全部为固定中文文案，不参与翻译。 -->
+    <string name="terminal_banner" translatable="false">DSH 终端（Ubuntu proot · bash）\n会话在后台保留，离开页面不会结束</string>
+    <!-- 提示符末尾的空格在 TerminalMessages 中拼接，避免资源文本被裁剪空白 -->
+    <string name="terminal_prompt" translatable="false">dsh@localhost:~$</string>
+    <string name="terminal_help_output" translatable="false">可用命令:\n  help           显示帮助信息\n  echo &lt;文字&gt;    原样输出文字\n  ls             列出目录内容\n  date           显示当前时间\n  status         显示运行状态\n  clear          清空当前会话历史</string>
+    <string name="terminal_ls_output" translatable="false">bin/     dev/     etc/     proc/    system/\ndata/    sdcard/  tmp/     usr/     vendor/</string>
+    <string name="terminal_status_output" translatable="false">DSH 运行中\n模式: 模拟终端（无真实 shell）\n状态: 正常</string>
+    <string name="terminal_command_not_found_prefix" translatable="false">command not found:</string>
+    <string name="terminal_input_hint" translatable="false">输入命令，回车发送</string>
+    <string name="terminal_send" translatable="false">发送</string>
+    <string name="terminal_clear" translatable="false">清空</string>
+    <string name="terminal_sessions_title" translatable="false">会话</string>
+    <string name="terminal_empty_session" translatable="false">当前会话暂无输出</string>
+</resources>
